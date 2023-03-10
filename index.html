@@ -1,24 +1,87 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <title>Week 6 Homework</title>
-    <meta name="description" type="Channel Changer Application">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Channel Selector</title>
+    <style>
+      /* Your custom styles here */
+    </style>
   </head>
   <body>
-    <div>
-      <div id="tv">
-        Select a channel to get started
-      </div>
-
-      <!-- Channel Buttons Go Here -->
-      <div id="channels">
-        <!-- Remove me! -->
-        <button>Channel Button</button>
-      </div>
+    <div id="channels">
+      <button data-channel="cooking">Channel 1</button>
+      <button data-channel="music">Channel 2</button>
+      <button data-channel="cricket">Channel 3</button>
     </div>
+    <div id="tv">
+      <!-- Video will be loaded here -->
+    </div>
+    <script type="text/javascript">
+      const data = {
+        channel1: {
+          title: 'Channel 1',
+          videoIds: ['video1', 'video2', 'video3']
+        },
+        channel2: {
+          title: 'Channel 2',
+          videoIds: ['video4', 'video5', 'video6']
+        },
+        channel3: {
+          title: 'Channel 3',
+          videoIds: ['video7', 'video8', 'video9']
+        }
+      };
     
-    <script src="script.js"></script>
-  </body>
-</html>
+      const videoUrl1 = 'https://www.youtube.com/watch?v=wvt0TkhO1CI';
+      const videoId1 = videoUrl1.split('v=')[1];
+      data.channel1.videoIds.push(videoId1);
+    
+      const videoUrl2 = 'https://www.youtube.com/watch?v=G-YVRQ-di3w';
+      const videoId2 = videoUrl2.split('v=')[1];
+      data.channel1.videoIds.push(videoId2); 
+    
+      const videoUrl3 = 'https://www.youtube.com/watch?v=M61viP3prdQ&t=93s';
+      const videoId3 = videoUrl3.split('v=')[1];
+      data.channel1.videoIds.push(videoId3);
+    
+      const videoUrl4 = 'https://www.youtube.com/watch?v=WrsFXgQk5UI';
+      const videoId4 = videoUrl4.split('v=')[1];
+      data.channel2.videoIds.push(videoId4);
+    
+      const videoUrl5 = 'https://www.youtube.com/watch?v=sJEgD2TfWmw';
+      const videoId5 = videoUrl5.split('v=')[1];
+      data.channel2.videoIds.push(videoId5);
+    
+      const videoUrl6 = 'https://www.youtube.com/watch?v=dvD4hrkK7FI';
+      const videoId6 = videoUrl6.split('v=')[1];
+      data.channel2.videoIds.push(videoId6);
+    
+      const videoUrl7 = 'https://www.youtube.com/watch?v=heqg8wRj5Mg';
+      const videoId7 = videoUrl7.split('v=')[1];
+      data.channel3.videoIds.push(videoId7);
+    
+      const videoUrl8 = 'https://www.youtube.com/watch?v=FrARVyykkCU';
+      const videoId8 = videoUrl8.split('v=')[1];
+      data.channel3.videoIds.push(videoId8);
+    
+      const videoUrl9 = 'https://www.youtube.com/watch?v=LyrqhruLhBA';
+      const videoId9 = videoUrl9.split('v=')[1];
+      data.channel3.videoIds.push(videoId9);
+    
+      const channels = document.querySelectorAll('#channels button');
+      const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+      const tv = document.querySelector('#tv');
+    
+      channels.forEach(button => {
+        button.addEventListener('click', () => {
+          const channel = data[button.dataset.channel];
+          const videoId = channel.videoIds[Math.floor(Math.random() * channel.videoIds.length)];
+          const videoUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`;
+          fetch(videoUrl)
+            .then(response => response.json())
+            .then(data => {
+              const videoTitle = data.items[0].snippet.title;
+              const videoEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
+              tv.innerHTML = `<h2>${channel.title}</h2><h3>${videoTitle}</h3><iframe src="${
+
+                
